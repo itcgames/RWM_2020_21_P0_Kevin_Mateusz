@@ -93,5 +93,26 @@ namespace Tests
             Assert.AreEqual(game.score, 1);
         }
 
+        [UnityTest]
+        public IEnumerator MovingShipLeftWorksCorrectly()
+        {
+            Ship ship = game.GetShip();
+            float initialPos = ship.transform.position.x;
+            ship.MoveLeft();
+            yield return new WaitForSeconds(0.1f);
+
+            Assert.Less(ship.transform.position.x, initialPos);
+        }
+
+        [UnityTest]
+        public IEnumerator MovingShipRightWorksCorrectly()
+        {
+            Ship ship = game.GetShip();
+            float initialPos = ship.transform.position.x;
+            ship.MoveRight();
+            yield return new WaitForSeconds(0.1f);
+
+            Assert.Greater(ship.transform.position.x, initialPos);
+        }
     }
 }
