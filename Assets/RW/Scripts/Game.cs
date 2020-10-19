@@ -92,6 +92,7 @@ public class Game : MonoBehaviour
     {
         instance.score++;
         instance.scoreText.text = "Score: " + instance.score;
+        FindObjectOfType<AudioManager>().Play("AsteroidDestroy");
     }
 
     public Ship GetShip()

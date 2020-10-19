@@ -75,6 +75,7 @@ public class Ship : MonoBehaviour
 
     public void ShootLaser()
     {
+        FindObjectOfType<AudioManager>().Play("Laser");
         StartCoroutine("Shoot");
     }
 
