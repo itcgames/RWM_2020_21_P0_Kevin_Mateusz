@@ -30,6 +30,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Security.Cryptography;
 using UnityEngine;
 
@@ -53,6 +54,8 @@ public class Ship : MonoBehaviour
     private float maxUp = 3;
     private float maxDown = -3;
 
+    private bool shipLocked = true;
+
     private void Update()
     {
         if (isDead)
@@ -75,14 +78,31 @@ public class Ship : MonoBehaviour
             MoveRight();
         }
 
-        if (Input.GetKey(KeyCode.UpArrow))
+        if (!shipLocked)
         {
-            MoveUp();
+            if (Input.GetKey(KeyCode.UpArrow))
+            {
+                MoveUp();
+            }
+
+            if (Input.GetKey(KeyCode.DownArrow))
+            {
+                MoveDown();
+            }
         }
 
-        if (Input.GetKey(KeyCode.DownArrow))
+        if (shipLocked)
         {
-            MoveDown();
+            if (Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.UpArrow))
+            {
+                MoveUp();
+                shipLocked = false;
+            }
+        }
+
+        if (transform.position.y < -2.97f)
+        {
+            shipLocked = true;
         }
     }
 
@@ -155,5 +175,11 @@ public class Ship : MonoBehaviour
         explosion.SetActive(false);
         mesh.enabled = true;
         isDead = false;
+    }
+
+    public void UnlockShip()
+    {
+        transform.position = new Vector3(transform.position.x, -2.96f, 0);
+        shipLocked = false;
     }
 }
