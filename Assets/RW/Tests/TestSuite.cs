@@ -94,6 +94,16 @@ namespace Tests
         }
 
         [UnityTest]
+        public IEnumerator NewGameSetZero()
+        {
+            game.isGameOver = true;
+            game.NewGame();
+            yield return new WaitForSeconds(0.1f);
+            
+            Assert.AreEqual(game.score, 0);
+        }
+
+        [UnityTest]
         public IEnumerator MovingShipLeftWorksCorrectly()
         {
             Ship ship = game.GetShip();
