@@ -30,6 +30,8 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Security.Cryptography;
 using UnityEngine;
 
 public class Ship : MonoBehaviour
@@ -49,6 +51,10 @@ public class Ship : MonoBehaviour
 
     private float maxLeft = -8;
     private float maxRight = 8;
+    private float maxUp = 3;
+    private float maxDown = -3;
+
+    private bool shipLocked = true;
 
     private void Update()
     {
@@ -70,6 +76,33 @@ public class Ship : MonoBehaviour
         if (Input.GetKey(KeyCode.RightArrow))
         {
             MoveRight();
+        }
+
+        if (!shipLocked)
+        {
+            if (Input.GetKey(KeyCode.UpArrow))
+            {
+                MoveUp();
+            }
+
+            if (Input.GetKey(KeyCode.DownArrow))
+            {
+                MoveDown();
+            }
+        }
+
+        if (shipLocked)
+        {
+            if (Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.UpArrow))
+            {
+                MoveUp();
+                shipLocked = false;
+            }
+        }
+
+        if (transform.position.y < -2.97f)
+        {
+            shipLocked = true;
         }
     }
 
@@ -100,7 +133,7 @@ public class Ship : MonoBehaviour
         transform.Translate(-Vector3.left * Time.deltaTime * speed);
         if (transform.position.x < maxLeft)
         {
-            transform.position = new Vector3(maxLeft, -3.22f, 0);
+            transform.position = new Vector3(maxLeft, transform.position.y, 0);
         }
     }
 
@@ -109,7 +142,25 @@ public class Ship : MonoBehaviour
         transform.Translate(-Vector3.right * Time.deltaTime * speed);
         if (transform.position.x > maxRight)
         {
-             transform.position = new Vector3(maxRight, -3.22f, 0);
+             transform.position = new Vector3(maxRight, transform.position.y, 0);
+        }
+    }
+
+    public void MoveUp()
+    {
+        transform.Translate(-Vector3.forward * Time.deltaTime * speed);
+        if (transform.position.y > maxUp)
+        {
+            transform.position = new Vector3(transform.position.x, maxUp, 0);
+        }
+    }
+
+    public void MoveDown()
+    {
+        transform.Translate(-Vector3.back * Time.deltaTime * speed);
+        if (transform.position.y < maxDown)
+        {
+            transform.position = new Vector3(transform.position.x, maxDown, 0);
         }
     }
 
@@ -125,5 +176,11 @@ public class Ship : MonoBehaviour
         explosion.SetActive(false);
         mesh.enabled = true;
         isDead = false;
+    }
+
+    public void UnlockShip()
+    {
+        transform.position = new Vector3(transform.position.x, -2.96f, 0);
+        shipLocked = false;
     }
 }

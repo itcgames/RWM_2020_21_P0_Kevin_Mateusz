@@ -126,5 +126,40 @@ namespace Tests
 
             Assert.Greater(ship.transform.position.x, initialPos);
         }
+
+        [UnityTest]
+        public IEnumerator MovingShipUpWorksCorrectly()
+        {
+            Ship ship = game.GetShip();
+            float initialPos = ship.transform.position.y;
+            ship.MoveUp();
+            yield return new WaitForSeconds(0.1f);
+
+            Assert.Greater(ship.transform.position.y, initialPos);
+        }
+
+        [UnityTest]
+        public IEnumerator MovingShipDownWorksCorrectly()
+        {
+            Ship ship = game.GetShip();
+            float initialPos = ship.transform.position.y;
+            ship.MoveDown();
+            yield return new WaitForSeconds(0.1f);
+
+            Assert.Greater(ship.transform.position.y, initialPos);
+        }
+
+        [UnityTest]
+        public IEnumerator LockingShipWorksCorrectly()
+        {
+            Ship ship = game.GetShip();
+            ship.MoveUp();
+            float firstPos = ship.transform.position.y;
+            ship.UnlockShip();
+            ship.MoveUp();
+            yield return new WaitForSeconds(0.1f);
+
+            Assert.Greater(ship.transform.position.y, firstPos);
+        }
     }
 }
