@@ -9,13 +9,15 @@ namespace Tests
     public class TestSuite
     {
         private Game game;
-
+        private AudioManager audioManager;
         [SetUp]
         public void Setup()
         {
+            
             GameObject gameGameObject =
                 MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/Game"));
             game = gameGameObject.GetComponent<Game>();
+            audioManager = gameGameObject.GetComponent<AudioManager>();
         }
 
         [TearDown]
