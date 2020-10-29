@@ -104,4 +104,9 @@ public class Game : MonoBehaviour
     {
         return spawner.GetComponent<Spawner>();
     }
+
+    public AudioManager GetAudioManager()
+    {
+        return GetComponent<AudioManager>();
+    }
 }

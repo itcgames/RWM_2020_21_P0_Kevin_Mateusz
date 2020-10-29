@@ -13,7 +13,7 @@ namespace Tests
         [SetUp]
         public void Setup()
         {
-            
+
             GameObject gameGameObject =
                 MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/Game"));
             game = gameGameObject.GetComponent<Game>();
@@ -101,7 +101,7 @@ namespace Tests
             game.isGameOver = true;
             game.NewGame();
             yield return new WaitForSeconds(0.1f);
-            
+
             Assert.AreEqual(game.score, 0);
         }
 
@@ -161,5 +161,12 @@ namespace Tests
 
             Assert.Greater(ship.transform.position.y, firstPos);
         }
-    }
+        //[UnityTest]
+        //public IEnumerator PlayLaser()
+        //{
+        //    AudioManager audioManager = game.GetAudioManager();
+        //    audioManager.Play("Laser");
+
+        //    Assert.AreEqual(audioManager.sounds)
+        //}
 }
