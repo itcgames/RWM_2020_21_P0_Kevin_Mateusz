@@ -51,6 +51,7 @@ public class Laser : MonoBehaviour
         if (collision.gameObject.GetComponent<Asteroid>() != null)
         {
             Game.AsteroidDestroyed();
+            //FindObjectOfType<AudioManager>().Play("AsteroidDestroy");
             Destroy(gameObject);
             spawner.asteroids.Remove(collision.gameObject);
             Destroy(collision.gameObject);
